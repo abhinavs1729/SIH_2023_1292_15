@@ -4,7 +4,7 @@ import pandas as pd
 import os
 
 def waterLevelFind(input_lat,input_lan):
-    loc = r"C:\Users\Lakshya Agrawal\Desktop\fontend\up_data"
+    loc = r".\up_data"
     files = os.listdir(loc)
     level_dict = {}
     freq = {}
@@ -19,12 +19,12 @@ def waterLevelFind(input_lat,input_lan):
             if(lat_long in level_dict):
                 level_dict[lat_long]+=df["level"][i]
             else:
-                level_dict[lat_long]+=df["level"][i]
+                level_dict[lat_long]=df["level"][i]
             level_dict[lat_long]+=df["level"][i]
             if(lat_long in freq):
                 freq[lat_long]+=1
             else:
-                freq[lat_long]+=1
+                freq[lat_long]=1
     for p in level_dict:
         avg_level_dict[p]=level_dict[p]/freq[p]
 
