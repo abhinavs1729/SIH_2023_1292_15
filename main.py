@@ -1,7 +1,9 @@
+from flask import Flask, redirect,url_for,render_template,request
+
 import pandas as pd
 import os
 
-def waterLevelFind(x,y):
+def waterLevelFind(input_lat,input_lan):
     loc = r"C:\Users\Lakshya Agrawal\Desktop\fontend\up_data"
     files = os.listdir(loc)
     level_dict = {}
@@ -17,17 +19,16 @@ def waterLevelFind(x,y):
             if(lat_long in level_dict):
                 level_dict[lat_long]+=df["level"][i]
             else:
-                level_dict[lat_long]=df["level"][i]
+                level_dict[lat_long]+=df["level"][i]
             level_dict[lat_long]+=df["level"][i]
             if(lat_long in freq):
                 freq[lat_long]+=1
             else:
-                freq[lat_long]=1
+                freq[lat_long]+=1
     for p in level_dict:
         avg_level_dict[p]=level_dict[p]/freq[p]
 
-    input_lat = 1
-    input_lan = 1
+   
     loc1 = (input_lat,input_lan)
     import haversine as hs   
     from haversine import Unit
@@ -41,6 +42,9 @@ def waterLevelFind(x,y):
     i = 0
     nearest_levels_array = []
     total_distance = 0
+    sorted_dict_by_keys = {k: nearest_5levels[k] for k in sorted(nearest_5levels.keys())}
+    print(sorted_dict_by_keys)
+    nearest_5levels = sorted_dict_by_keys
     for key,value in nearest_5levels.items():
         nearest_levels_array.append((key,value))
         total_distance+=key
@@ -53,3 +57,32 @@ def waterLevelFind(x,y):
         output_val+=(1-key/total_distance)*value
 
     print(output_val/4)
+    return output_val/4
+
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+@app.route("/waterLevel",methods=["POST","GET"])
+def waterLevel():
+    # return render_template("index.html")
+    
+    if request.method == "POST":
+        Latitude = request.form["lat"]
+        Longitude = request.form["lng"]
+        print(type(Latitude))
+        lat = float(Latitude)
+        lon = float(Longitude)
+        groundLevel = waterLevelFind(lat,lon)
+        stri =  str(groundLevel)
+        return render_template("ans.html",data=[stri])
+        # return stri
+    else:
+        return render_template("index.html")
+    
+
+if __name__ == "__main__":
+    app.run(debug=True)
