@@ -82,8 +82,7 @@ table.gsc-search-box {
         gtag('config', 'UA-159581532-5');
     </script>
 
-<title>Latitude and Longitude Finder on Map Get Coordinates</title>
-<meta name="description" content="Lat long is a geographic tool which helps you to get latitude and longitude of a place or city and find gps coordinates on map, convert lat long, gps, dms and utm." />
+<title>Latitude and Longitude Finder </title>
 <link rel="canonical" href="https://www.latlong.net/" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
@@ -91,58 +90,49 @@ table.gsc-search-box {
 </head>
 <body>
 <main>
-<div class="center margin10" style="min-height:100px">
+<!-- <div class="center margin10" style="min-height:100px">
     <div data-aaad='true' data-aa-adunit='/22815767462/LLG_728v_1'></div>
     <div data-aaad='true' data-aa-adunit='/22815767462/LLG_Mob_300v_1'></div>
-</div>
-<h1>Latitude and Longitude Finder</h1>
-<p><strong>Latitude and Longitude</strong> are the units that represent the <em>coordinates at geographic coordinate system</em>. 
-To make a search, use the name of a place, city, state, or address, or click the location on the map to <strong>find lat long coordinates</strong>.</p>
+</div> -->
+<h1 class="center">Latitude and Longitude Finder</h1>
 <div class="row">
-<div class="col-7 graybox">
-
-    <!-- <form id="frmPlace" method="post">
-    <label for="place">Place Name</label>
-    <input id="place" name="place" type="text" placeholder="Type a place name" class="width70" maxlength="140" style="text-transform:capitalize;" value="" required  />
-    <input type="hidden" name="lltoken" id="lltoken" value="2ddbdd98eba647425b61ddb941946dd935f0b68abe7c612120ca6675e3d7bd9c" />
-    <input type="hidden" name="llcd" id="llcd" value="0" />
-    <button title="Find Lat &amp; Long" class="button" id="btnfind">Find</button><br />
-    <small>Add the country code for better results. Ex: London, UK</small><br />
-    <span id="loading">Looking for the lat long, please wait...</span>
-    <button class="btn"> </button>
-    </form> -->
-
+<div class="col-12 graybox">
 <form action="/waterLevel" method="post">
     <div class="row">
         <div class="col-6 m2">
-        <label for="lat">Latitude</label>
-        <input type="text" name="lat" id="lat" placeholder="lat coordinate" />
+        <label class="center" for="lat">Latitude</label>
+        <div class="center">
+            <input class="center " type="text" name="lat" id="lat" placeholder="lat coordinate" />
+        </div>
         </div>
         <div class="col-6 m2">
-        <label for="lng">Longitude</label>
-        <input type="text" name="lng" id="lng" placeholder="long coordinate" />
+        <label for="lng" class="center">Longitude</label>
+        <div class="center">
+            <input type="text" name="lng" id="lng" placeholder="long coordinate" />
         </div>
-        <button class="btn btn-primary">Find the depth </button>
+        </div>
+        <button type="submit" class="btn btn-primary">Find the depth </button>
     </div>
 </form>
 
     <p>For better accuracy please type Name Address City State Zipcode.</p>
 </div>
-<div class="col-5">
-<div class="center" style="min-height:280px;">
-    {%block xyz%} {%endblock xyz%}
-<div data-aaad='true' data-aa-adunit='/22815767462/LLG_300v_1'></div>
-<div data-aaad='true' data-aa-adunit='/22815767462/LLG_Mob_300v_2' class="margin10"></div>
 </div>
+
+<div class="col-12">
+    <div class="center" >
+        {%block xyz%} {%endblock xyz%}
+    <!-- <div data-aaad='true' data-aa-adunit='/22815767462/LLG_300v_1'></div> -->
+    <!-- <div data-aaad='true' data-aa-adunit='/22815767462/LLG_Mob_300v_2' class="margin10"></div> -->
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-12">
+        <div id="latlongmap" style="width:100%;height:400px;" class="shadow"></div>
+    </div> 
 </div>
-<div class="row"><div class="col-7">
-<div id="latlongmap" style="width:100%;height:400px;" class="shadow"></div>
-</div>
-<div class="col-5">
-<iframe id="latlongmape" title="Satellite Map" width="360" height="400" style="border:0;width:100%" class="shadow" src="satellite.htm" allowfullscreen>
-</iframe>
-</div></div>
+
 <div class="row bg-gray border">
 <div class="col-6 m6">
 <span class="titleh3">Lat Long</span>
@@ -154,6 +144,7 @@ To make a search, use the name of a place, city, state, or address, or click the
 <span id="dms-lng" class="coordinatetxt">0</span>
 </div>
 </div>
+
 <div class="margin10 center" style="min-height:250px">
 <div data-aaad='true' data-aa-adunit='/22815767462/LLG_728v_2'></div>
 <div data-aaad='true' data-aa-adunit='/22815767462/LLG_Mob_300v_2'></div>
@@ -162,26 +153,38 @@ To make a search, use the name of a place, city, state, or address, or click the
 
 <form class="bgrs padding10 border margin20" onsubmit="return false;">
 <div class="row">
-<div class="col-6">
-<label for="coordinateslink">Share this location link</label>
-<textarea readonly="readonly" id="coordinateslink" class="small full-width" onclick="this.focus();this.select()"></textarea> <br />
-<small>Copy and paste the html code above in your website to share.</small>
-</div>
-<div class="col-6">
-<label for="coordinatesurl">Location page url</label>
-<input type="text" id="coordinatesurl" class="small full-width" readonly="readonly" onclick="this.select();" />
-</div>
+    <div class="col-6">
+    <!-- <label for="coordinateslink">Share this location link</label> -->
+    <textarea readonly="readonly" id="coordinateslink" class="small full-width" style="display: none;" onclick="this.focus();this.select()"></textarea> <br>
+    <!-- <small>Copy and paste the html code above in your website to share.</small> -->
+    </div>
+
+    <div class="col-6">
+    <!-- <label for="coordinatesurl">Location page url</label> -->
+    <input type="text" id="coordinatesurl" class="small full-width" readonly="readonly" style="display: none;" onclick="this.select();" >
+    </div>
 </div>
 </form>
 
 
 <div class="stickyAd">
-<div data-aaad='true' data-aa-adunit='/22815767462/LLG_160v_Sticky'></div>
+    <div data-aaad='true' data-aa-adunit='/22815767462/LLG_160v_Sticky'></div>
 </div>
+
 <div class="stickyAdMobile" style="text-align:center;background-color:#fff">
     <div data-aaad='true' data-aa-adunit='/22815767462/LLG_Mob_300v_sticky'></div>
 </div>
- <div data-aaad='true' data-aa-adunit='/22815767462/LLG_Desktop_Anchor'></div>
+
+<div data-aaad='true' data-aa-adunit='/22815767462/LLG_Desktop_Anchor'></div>
+
+
+
+
+
+
+
+
+ 
 
 <script type="application/ld+json">{"@context":"http://schema.org","@type":"WebSite","name":"Lat Long Finder","alternateName":"Latitude and Longitude Finder","url":"https://www.latlong.net/","sameAs":["https://twitter.com/latlong_net"]}</script>
 <script>var yid ='main';
@@ -284,7 +287,7 @@ document.getElementById("latlngspan").innerHTML ="(" + lt + ", " + ln + ")";
 document.getElementById("coordinatesurl").value = "https://www.latlong.net/c/?lat=" + lt + "&long=" + ln;
 document.getElementById("coordinateslink").innerHTML = '&lt;a href="https://www.latlong.net/c/?lat=' + lt + "&amp;long=" + ln + '" target="_blank"&gt;(' + lt + ", " + ln + ")&lt;/a&gt;";
 dec2dms(lt,ln);
-document.getElementById('latlongmape').src='https://www.google.com/maps/embed/v1/view?key=AIzaSyALrSTy6NpqdhIOUs3IQMfvjh71td2suzY&maptype=satellite&'+'center='+lt+','+ ln+'&zoom='+zm;
+// document.getElementById('latlongmape').src='https://www.google.com/maps/embed/v1/view?key=AIzaSyBRDALyg8RSWy-hx7-u6puFLp3scYUIBQY&maptype=satellite&'+'center='+lt+','+ ln+'&zoom='+zm;
 }
        
 </script>

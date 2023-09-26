@@ -9,7 +9,7 @@ def waterLevelFind(input_lat,input_lan):
     level_dict = {}
     freq = {}
     avg_level_dict = {}
-    print(type(level_dict))
+    # print(type(level_dict))
 
     for file in files:
         st = loc+"\\"+file
@@ -43,7 +43,7 @@ def waterLevelFind(input_lat,input_lan):
     nearest_levels_array = []
     total_distance = 0
     sorted_dict_by_keys = {k: nearest_5levels[k] for k in sorted(nearest_5levels.keys())}
-    print(sorted_dict_by_keys)
+    # print(sorted_dict_by_keys)
     nearest_5levels = sorted_dict_by_keys
     for key,value in nearest_5levels.items():
         nearest_levels_array.append((key,value))
@@ -52,11 +52,11 @@ def waterLevelFind(input_lat,input_lan):
         if(i>5):
             break
 
-    print(nearest_levels_array)
+    # print(nearest_levels_array)
     for key,value in nearest_levels_array:
         output_val+=(1-key/total_distance)*value
 
-    print(output_val/4)
+    # print(output_val/4)
     return output_val/4
 
 
@@ -69,11 +69,10 @@ def home():
 @app.route("/waterLevel",methods=["POST","GET"])
 def waterLevel():
     # return render_template("index.html")
-    
     if request.method == "POST":
         Latitude = request.form["lat"]
         Longitude = request.form["lng"]
-        print(type(Latitude))
+        # print(type(Latitude))
         lat = float(Latitude)
         lon = float(Longitude)
         groundLevel = waterLevelFind(lat,lon)
